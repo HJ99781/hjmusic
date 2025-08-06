@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>투두리스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 투두리스트</h1>
+        </header>
+
+        <div class="view-tabs">
+            <button class="tab-btn active" data-view="list">📋 리스트</button>
+            <button class="tab-btn" data-view="calendar">📅 달력</button>
+        </div>
+
+        <div class="add-todo-section">
+            <form id="todoForm" class="todo-form">
+                <input type="text" id="todoInput" placeholder="할 일을 입력하세요..." required>
+                <input type="date" id="todoDate" required>
+                <button type="submit" class="add-btn">추가</button>
+            </form>
+        </div>
+
+        <div id="listView" class="view-content active">
+            <div class="todo-list" id="todoList">
+                <!-- 할일들이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+
+        <div id="calendarView" class="view-content">
+            <div class="calendar-header">
+                <button id="prevMonth" class="nav-btn">◀</button>
+                <h2 id="currentMonth"></h2>
+                <button id="nextMonth" class="nav-btn">▶</button>
+            </div>
+            <div class="calendar">
+                <div class="calendar-weekdays">
+                    <div>일</div>
+                    <div>월</div>
+                    <div>화</div>
+                    <div>수</div>
+                    <div>목</div>
+                    <div>금</div>
+                    <div>토</div>
+                </div>
+                <div class="calendar-days" id="calendarDays">
+                    <!-- 달력 날짜들이 여기에 동적으로 추가됩니다 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
