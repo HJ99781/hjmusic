@@ -3,53 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>투두리스트</title>
+    <title>뮤직뱅크 - AI 작사가</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>📝 투두리스트</h1>
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-music"></i>
+                <h1>뮤직뱅크</h1>
+            </div>
+            <p class="subtitle">AI 작사가와 함께하는 음악 창작</p>
         </header>
 
-        <div class="view-tabs">
-            <button class="tab-btn active" data-view="list">📋 리스트</button>
-            <button class="tab-btn" data-view="calendar">📅 달력</button>
-        </div>
-
-        <div class="add-todo-section">
-            <form id="todoForm" class="todo-form">
-                <input type="text" id="todoInput" placeholder="할 일을 입력하세요..." required>
-                <input type="date" id="todoDate" required>
-                <button type="submit" class="add-btn">추가</button>
-            </form>
-        </div>
-
-        <div id="listView" class="view-content active">
-            <div class="todo-list" id="todoList">
-                <!-- 할일들이 여기에 동적으로 추가됩니다 -->
-            </div>
-        </div>
-
-        <div id="calendarView" class="view-content">
-            <div class="calendar-header">
-                <button id="prevMonth" class="nav-btn">◀</button>
-                <h2 id="currentMonth"></h2>
-                <button id="nextMonth" class="nav-btn">▶</button>
-            </div>
-            <div class="calendar">
-                <div class="calendar-weekdays">
-                    <div>일</div>
-                    <div>월</div>
-                    <div>화</div>
-                    <div>수</div>
-                    <div>목</div>
-                    <div>금</div>
-                    <div>토</div>
+        <main class="main-content">
+            <div class="settings-panel">
+                <div class="api-section">
+                    <h3><i class="fas fa-key"></i> API 설정</h3>
+                    <div class="input-group">
+                        <label for="apiKey">Gemini API 키</label>
+                        <input type="password" id="apiKey" placeholder="API 키를 입력하세요">
+                        <button id="saveApiKey" class="btn btn-secondary">
+                            <i class="fas fa-save"></i> 저장
+                        </button>
+                    </div>
                 </div>
-                <div class="calendar-days" id="calendarDays">
-                    <!-- 달력 날짜들이 여기에 동적으로 추가됩니다 -->
+            </div>
+
+            <div class="content-section">
+                <div class="input-section">
+                    <h3><i class="fas fa-edit"></i> 가사 주제 입력</h3>
+                    <div class="input-group">
+                        <label for="topic">주제나 내용</label>
+                        <textarea id="topic" placeholder="노래 가사로 만들고 싶은 주제나 내용을 자세히 입력해주세요. 예: 사랑, 이별, 희망, 자연 등"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="mood">음악 분위기 (선택사항)</label>
+                        <select id="mood">
+                            <option value="">자동 선택</option>
+                            <option value="happy">행복하고 경쾌한</option>
+                            <option value="sad">슬프고 감성적인</option>
+                            <option value="energetic">활기찬</option>
+                            <option value="calm">차분하고 평화로운</option>
+                            <option value="romantic">로맨틱한</option>
+                            <option value="melancholic">멜랑콜릭한</option>
+                        </select>
+                    </div>
+                    <button id="generateLyrics" class="btn btn-primary">
+                        <i class="fas fa-magic"></i> 가사 생성하기
+                    </button>
                 </div>
+
+                <div class="output-section">
+                    <h3><i class="fas fa-music"></i> 생성된 가사</h3>
+                    <div class="output-container">
+                        <div class="lyrics-output">
+                            <h4>🎵 가사</h4>
+                            <div id="lyricsContent" class="content-box">
+                                <p class="placeholder">주제를 입력하고 가사 생성하기 버튼을 눌러보세요!</p>
+                            </div>
+                            <button id="copyLyrics" class="btn btn-copy" style="display: none;">
+                                <i class="fas fa-copy"></i> 가사 복사
+                            </button>
+                        </div>
+                        
+                        <div class="style-output">
+                            <h4>🎼 음악 스타일</h4>
+                            <div id="styleContent" class="content-box">
+                                <p class="placeholder">가사와 함께 음악 스타일이 추천됩니다.</p>
+                            </div>
+                            <button id="copyStyle" class="btn btn-copy" style="display: none;">
+                                <i class="fas fa-copy"></i> 스타일 복사
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="suno-format">
+                        <h4><i class="fab fa-spotify"></i> SUNO AI용 포맷</h4>
+                        <div id="sunoContent" class="content-box suno-box">
+                            <p class="placeholder">SUNO AI에서 사용할 수 있는 포맷으로 출력됩니다.</p>
+                        </div>
+                        <button id="copySuno" class="btn btn-copy" style="display: none;">
+                            <i class="fas fa-copy"></i> SUNO 포맷 복사
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="loading" class="loading-overlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>AI가 가사를 작성하고 있어요...</p>
             </div>
         </div>
     </div>
